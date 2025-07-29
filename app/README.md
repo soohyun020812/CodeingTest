@@ -6,7 +6,7 @@
 
 ## 📌 프로젝트 목적
 
-라벨링 웹사이트에서 다음 요구사항을 만족하기 위해 제작된 실시간 접근 제어 시스템입니다:
+라벨링 웹사이트에서 다음 요구사항을 만족하기 위해 제작된 실시간 접근 제어 시스템입니다
 
 - 프로젝트별 동일한 파일에 여러 사용자가 접근하지 못하도록 제어
 - 사용자별 접근 중인 파일을 추적하고 상태 표시
@@ -17,13 +17,13 @@
 
 ## 🗂️ 프로젝트 구조
 
-│app <br>
-├── main.py <br>
-├── routers/ <br>
-│   ├── file_lock.py <br>
-│   └── websocket.py <br>
-├── services/ <br>
-│   ├── lock_service.py <br>
-│   └── websocket_service.py <br>
-└── utils/ <br>
-    └── redis.py <br>
+app/
+├── main.py
+├── routers/
+│   ├── file_lock.py
+│   └── websocket.py
+├── services/
+│   ├── lock_service.py
+│   └── websocket_service.py
+└── utils/
+    └── redis.py
