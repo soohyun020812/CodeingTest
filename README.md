@@ -17,3 +17,13 @@
 
 ## 🗂️ 프로젝트 구조
 
+│app
+├── main.py
+├── routers/
+│   ├── file_lock.py
+│   └── websocket.py
+├── services/
+│   ├── lock_service.py
+│   └── websocket_service.py
+└── utils/
+    └── redis.py
