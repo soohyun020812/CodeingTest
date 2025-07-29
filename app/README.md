@@ -53,13 +53,13 @@ app/
 
 ### 🚀 실행 방법 (bash)
 
-1. 가상 환경 설정 및 의존성 설치
+**1. 가상 환경 설정 및 의존성 설치**
 - python -m venv venv
 - source venv/bin/activate  # Windows: venv\Scripts\activate
 - pip install fastapi uvicorn
-2. 서버 실행
+**2. 서버 실행**
 - uvicorn main:app --reload
-3. 클라이언트 테스트
+**3. 클라이언트 테스트**
 - 브라우저에서 http://localhost:8000/static/index.html 접속 후 WebSocket 테스트 가능
 
 ---
