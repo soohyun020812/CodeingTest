@@ -6,7 +6,7 @@
 
 ### 📌 프로젝트 목적
 
-라벨링 웹사이트에서 다음 요구사항을 만족하기 위해 제작된 실시간 접근 제어 시스템입니다
+라벨링 웹사이트에서 다음 요구사항을 만족하기 위해 제작된 실시간 접근 제어 시스템입니다.
 
 - 프로젝트별 동일한 파일에 여러 사용자가 접근하지 못하도록 제어
 - 사용자별 접근 중인 파일을 추적하고 상태 표시
@@ -56,3 +56,13 @@ uvicorn : 'uvicorn' 용어가 cmdlet, 함수, 스크립트 파일 또는 실행�
 **문제 2** : 클라이언트에서 메시지는 보냈는데 서버 메시지가 안 뜸
 **원인** : WebSocket URL 형식이 잘못되었거나, 서버-클라이언트가 같은 ```project_id```를 기준으로 브로드캐스트하지 않음
 **해결 방법** : 1. WebSocket 연결 경로를 ```/ws/{project_id}``` 형식으로 맞추고, 클라이언트에서 일관되게 동일한 ```project_id``` 사용 (예: ```project123```)
+
+**문제 3** : WebSocket 메시지가 수신되지 않음  
+**원인** : 클라이언트에서 메시지는 전송하지만, ```onmessage``` 이벤트 핸들러가 정의되어 있지 않아 서버 응답이 화면에 표시되지 않음  
+**해결 방법** : JavaScript에서 WebSocket의 ```onmessage``` 이벤트 리스너를 등록하여, 서버로부터 수신한 메시지를 DOM에 출력하도록 수정  
+```javascript
+socket.onmessage = function (event) {
+    const msg = document.createElement("div");
+    msg.textContent = event.data;
+    messagesDiv.appendChild(msg);
+};
