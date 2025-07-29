@@ -32,7 +32,7 @@ app/
 
 ---
 
-### 🚀 실행 방법** (bash)
+### 🚀 실행 방법 (bash)
 
 1. 가상 환경 설정 및 의존성 설치
 - python -m venv venv
