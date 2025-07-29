@@ -85,6 +85,7 @@ socket.onmessage = function (event) {
     msg.textContent = event.data;
     messagesDiv.appendChild(msg);
 };
+```
 
 ---
 
