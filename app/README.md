@@ -15,6 +15,16 @@
 
 ---
 
+### 🛠️ 기술 스택
+
+- Python 3.11
+- FastAPI
+- WebSocket
+- Redis (접근 제어용 캐시)
+- Uvicorn (ASGI 서버)
+
+---
+
 ### 🗂️ 프로젝트 구조
 
 ```
@@ -29,6 +39,15 @@ app/
 └── utils/
     └── redis.py
 ```
+
+---
+
+### ⚙️ 주요 기능
+
+- 프로젝트별 파일 단일 접근 제어 및 잠금 관리
+- 사용자별 파일 접근 상태 실시간 표시 (프로필 포함 확장 가능)
+- WebSocket 기반 실시간 메시지 전송 및 브로드캐스트
+- 비동기 처리 및 빠른 응답
 
 ---
 
@@ -66,3 +85,12 @@ socket.onmessage = function (event) {
     msg.textContent = event.data;
     messagesDiv.appendChild(msg);
 };
+
+---
+
+### 🚧 향후 개선 계획
+
+- Redis와 PostgreSQL 기반 상태 저장 및 클러스터 환경 지원
+- 사용자 인증 및 권한 관리 연동
+- Frontend와의 완전한 통합 UI/UX 개발
+- Docker 컨테이너화 및 배포 자동화
