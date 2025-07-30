@@ -2,14 +2,14 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from routers import file_lock, websocket
 
-app = FastAPI()
+access_control = FastAPI()
 
 # 라우터 등록
-app.include_router(file_lock.router, prefix="/file")
-app.include_router(websocket.router, prefix="/ws")
+access_control.include_router(file_lock.router, prefix="/file")
+access_control.include_router(websocket.router, prefix="/ws")
 
 # 웹소켓 테스트용 HTML 페이지
-@app.get("/")
+@access_control.get("/")
 async def get():
     return HTMLResponse("""
     <!DOCTYPE html>
