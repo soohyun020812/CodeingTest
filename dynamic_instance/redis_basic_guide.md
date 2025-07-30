@@ -100,3 +100,19 @@ GET model1_status
 => "running"
 ```
 > Redis는 디스크 대신 메모리에 저장하므로 매우 빠르지만, 전원이 꺼지면 날아갈 수 있음 (그러나 실시간 데이터 공유용으로는 최고)
+
+### 2. Redis는 "대기열"이다 — 비동기 작업 처리 (Celery 브로커)
+> 비유 : 고객이 "모델 학습 요청"을 했을 때, 그걸 바로 처리하지 않고 대기열에 넣어두면 작업자가 하나씩 꺼내서 처리함.
+
+  - 고객 요청: FastAPI /train
+  - 대기열에 등록: Celery가 Redis에 요청 메시지를 넣음
+  - 작업자(worker): 대기열에서 꺼내서 처리
+  - 결과 저장: Redis에 작업 상태를 저장하거나 결과를 반환
+
+```python
+# 작업 요청 (요청 → Redis)
+task = train_model_task.delay(project_id)
+
+# 결과 확인 (Redis에서)
+task_result = task.get()
+```
