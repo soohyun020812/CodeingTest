@@ -91,7 +91,7 @@ Redis는 속도가 매우 빠르고 다양한 기능을 갖춘 **초경량 데�
 <hr>
 
 ### ✅ 1. Redis는 "초고속 노트"다 — 아주 빠른 key-value 저장소
-> 비유 : 딥러닝 라벨링 팀에서 누가 어떤 모델을 쓰는 중인지, 어떤 작업이 대기 중인지, 학습이 끝났는지 종이에 적어서 실시간으로 다 같이 보는 상황.
+> 비유 : 딥러닝 라벨링 팀에서 ```누가 어떤 모델을 쓰는 중```인지, ```어떤 작업이 대기 중```인지, ```학습이 끝났는지``` 종이에 적어서 실시간으로 다 같이 보는 상황.
 
 이때 종이 대신 Redis를 사용
 ```redis
@@ -101,10 +101,10 @@ GET model1_status
 ```
 > Redis는 디스크 대신 메모리에 저장하므로 매우 빠르지만, 전원이 꺼지면 날아갈 수 있음 (그러나 실시간 데이터 공유용으로는 최고)
 
-### 2. Redis는 "대기열"이다 — 비동기 작업 처리 (Celery 브로커)
+### ✅ 2. Redis는 "대기열"이다 — 비동기 작업 처리 (Celery 브로커)
 > 비유 : 고객이 "모델 학습 요청"을 했을 때, 그걸 바로 처리하지 않고 대기열에 넣어두면 작업자가 하나씩 꺼내서 처리함.
 
-  - 고객 요청: FastAPI /train
+  - 고객 요청: FastAPI /```train```
   - 대기열에 등록: Celery가 Redis에 요청 메시지를 넣음
   - 작업자(worker): 대기열에서 꺼내서 처리
   - 결과 저장: Redis에 작업 상태를 저장하거나 결과를 반환
@@ -115,4 +115,49 @@ task = train_model_task.delay(project_id)
 
 # 결과 확인 (Redis에서)
 task_result = task.get()
+```
+
+### ✅ 3. Redis는 "실시간 공유 캘린더"다 — 여러 프로세스가 동시에 상태 확인
+
+  - model_1의 상태가 running인지 idle인지 모든 프로세스가 Redis를 통해 확인 가능
+  - 동시에 여러 사용자가 접속 중일 때 상태 충돌 없이 관리 가능
+
+### 👣 Redis 개념을 쉽게 익히는 방법 3단계
+| 단계 | 설명 | 자료 |
+|------|------|------|
+| 🔹 1단계 | **CLI로 Redis 직접 조작해 보기** | [`redis-cli`](https://redis.io/docs/interact/redis-cli/) 실습 예시 (온라인 CLI 있음) |
+| 🔹 2단계 | **Python에서 Redis 사용해 보기** |  |
+| 🔹 3단계 | **내 프로젝트 흐름에 Redis가 어디에 쓰이는지 그림으로 그려보기** |  |
+
+### 🧪 실습 예시
+```python
+# redis_test.py
+import redis
+
+r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+
+# 상태 저장
+r.set('model1_status', 'running')
+
+# 상태 확인
+print("Model 1 Status:", r.get('model1_status'))
+
+# 상태 업데이트
+r.set('model1_status', 'completed')
+
+# 삭제
+r.delete('model1_status')
+```
+> ```python redis_test.py```로 실행해보기
+
+### ✍️ Redis 이미지
+```less
+[ FastAPI ] ---> [ Celery Task 요청 ]
+      |                  |
+      ↓                  ↓
+  사용자 요청       Redis가 대기열로 관리
+                          ↓
+                   [ Celery Worker ]
+                          ↓
+                   작업 처리 중 상태를 Redis에 저장
 ```
