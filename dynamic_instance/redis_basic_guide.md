@@ -161,3 +161,7 @@ r.delete('model1_status')
                           ↓
                    작업 처리 중 상태를 Redis에 저장
 ```
+
+<div align="center">
+  <h2>🎯 STEP 3: 내 프로젝트에 Redis 그려보기</h2>
+</div>
